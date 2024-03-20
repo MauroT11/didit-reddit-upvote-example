@@ -17,12 +17,12 @@ export async function PostList({ currentPage = 1 }) {
      OFFSET ${POSTS_PER_PAGE * (currentPage - 1)}`);
 
   return (
-    <>
+    <div className="max-w-screen-lg mx-auto pt-4 pr-4 items-center flex flex-col">
       <ul className="max-w-screen-lg mx-auto p-4 mb-4">
         {posts.map((post) => (
           <li
             key={post.id}
-            className=" py-4 flex space-x-6 hover:bg-zinc-200 rounded-lg"
+            className=" py-4 px-2 flex space-x-6 hover:bg-zinc-200 rounded-lg"
           >
             <Vote postId={post.id} votes={post.vote_total} />
             <div>
@@ -38,6 +38,6 @@ export async function PostList({ currentPage = 1 }) {
         ))}
       </ul>
       <Pagination currentPage={currentPage} />
-    </>
+    </div>
   );
 }

@@ -2,6 +2,8 @@ import { CommentForm } from "@/components/CommentForm";
 import { CommentList } from "@/components/CommentList";
 import { Vote } from "@/components/Vote";
 import { db } from "@/db";
+import { auth } from "@/auth";
+import Link from "next/link";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   // load the post
@@ -9,11 +11,15 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const post = posts[0]; // get the first one
 
   return {
-    title: `Diddit - ${post.title}`,
+    title: `Didit - ${post.title}`,
+    description: "A social app like Reddit or Hacker News",
   };
 }
 
 export default async function SinglePostPage({ params }) {
+  const session = await auth();
+
+  console.log(session)
   const postId = params.postId;
 
   const { rows: posts } = await db.query(
@@ -35,12 +41,12 @@ export default async function SinglePostPage({ params }) {
   );
 
   return (
-    <div className="max-w-screen-lg mx-auto pt-4 pr-4">
+    <div className="max-w-screen-lg mx-auto pt-4 pr-4 items-center flex flex-col">
       <div className="flex space-x-6">
         <Vote postId={post.id} votes={post.vote_total} />
         <div className="">
           <h1 className="text-2xl">{post.title}</h1>
-          <p className="text-zinc-400 mb-4">Posted by {post.name}</p>
+          <p className="text-zinc-400 mb-4">Posted by <Link href={`/user/${session.user.id}`} className="hover:underline">{post.name}</Link></p>
         </div>
       </div>
       <main className="whitespace-pre-wrap m-4">{post.body}</main>

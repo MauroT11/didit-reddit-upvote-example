@@ -8,9 +8,17 @@ export async function UserInfo() {
   return (
     <div>
       {session ? (
-        <div>
+        <div className="flex items-center gap-2">
+          <img
+              src={session.user.image}
+              alt={session.user.name}
+              width={22}
+              height={22}
+              className="rounded-full"
+            />
           {session.user.name}{" "}
           <span className="text-xs text-zinc-400 mr-3">#{session.user.id}</span>
+          
           <LogoutButton />
         </div>
       ) : (

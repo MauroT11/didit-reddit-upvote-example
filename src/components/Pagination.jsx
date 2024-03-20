@@ -9,7 +9,7 @@ export async function Pagination({ currentPage = 1 }) {
   const numOfPages = Math.ceil(count / POSTS_PER_PAGE);
 
   return (
-    <ul className="flex w-1/2 mx-auto space-x-3 text-2xl">
+    <ul className="flex w-1/2 justify-center mx-auto space-x-3 text-2xl">
       {currentPage > 1 && (
         <li>
           <a
